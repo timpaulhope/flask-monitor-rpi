@@ -60,7 +60,7 @@ To run the script in the background on startup, add the following to your cronta
 
 ```shell
 # Run monitor.py a minute after startup
-@reboot sleep 60 && sudo /usr/bin/python3 /[full project path]/monitor.py & 
+@reboot sleep 60 && /usr/bin/python3 /[full project path]/monitor.py & 
 ```
 ## Customization
 
