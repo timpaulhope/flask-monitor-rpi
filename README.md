@@ -1,49 +1,11 @@
 # **rpi-monitor-api**
-A simple flask app that serves up an api to help monitor the storage and performance of a raspberry pi
+A simple flask app that serves up an api to help monitor the storage and performance of a raspberry pi.
 
 ## Use Case
-**Example of API being used as sensors in a [Home Assistant](https://www.home-assistant.io/) dashboard**
+**Example of sensors created in a [Home Assistant](https://www.home-assistant.io/) dashboard reading from the api**
 
 ![alt text](/img/haDash.PNG)
 
-I call this api from an external home automation platform to create sensor entities for automations.
-
-## Build
-
->**NOTE:** The following assumes you're running `python3` and have `pip3` installed on you're Pi.
-
-The following are all run from the terminal of th Pi you want to monitor.
-
-Install the packages used by the app.
-```bash
-pip3 install psutil flask flask-restful gpiozero
-```
-
-Use `nano` (or other text editor) to create a blank py script.
-```bash
-nano monitor.py
-```
-Copy/Paste the code from the `monitor.py` file in this repo in to the blank file and adjust the IP adress, port, and folders you want to monitor before saving the file.
-
-Run the file locally to see if it works.
-```bash
-python3 monitor.py
-```
-All going well, you should see something like this in the terminal.
-```bash
- * Serving Flask app 'monitor'
- * Debug mode: on
-WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:9000
- * Running on http://192.16.20.36:9000
-Press CTRL+C to quit
- * Restarting with stat
- * Debugger is active!
- * Debugger PIN: 755-306-531
-```
-
-Once up and running, open a browser and go to http://localhost:9000/ to view the output
 **Sample API Output**
 
 ```json
@@ -63,3 +25,47 @@ Once up and running, open a browser and go to http://localhost:9000/ to view the
     }
 }
 ```
+## Requirements
+
+- Python 3.x
+- pip (Python package installer)
+- Python Packages:
+  - psutil 
+  - flask 
+  - flask-restful 
+  - gpiozero
+
+## Usage
+
+In the command-line interface of your Pi, create yourself a project directory and download/clone the monitor.py file. 
+
+Open the file and customize the local ip address of your pi, the port you want to publish to, and directories you want to monitor.
+
+From the project directory, Run the Flask application:
+
+```shell
+python3 monitor.py
+```
+The Flask API will start running on http://localhost:9000/. 
+
+To access the metrics, send a GET request to http://localhost:9000/ or use the appropriate URL based on your host and port configuration.
+
+The API will respond with a JSON object containing the system metrics, including CPU temperature, CPU utilization, and total/used/free storage for the folders you want to monitor.
+
+You can integrate this API with other applications or services to monitor system metrics or trigger automation based on the received data.
+
+To stop the Flask application, press Ctrl+C in the command-line interface.
+
+To run the script in the background on startup, add the following to your crontab.
+
+```shell
+# Run monitor.py a minute after startup
+@reboot sleep 60 && sudo /usr/bin/python3 /[full project path]/monitor.py & 
+```
+## Customization
+
+You can modify the code in monitor.py to include additional metrics or customize the behavior of the API as per your requirements.
+
+Update the subdirectories, host, and port in the code to match your desired paths and network configuration.
+
+If you don't care about temperature, the code can also be modified for use on linux machines by removing reference to/metrics generated from the gpiozero package.
