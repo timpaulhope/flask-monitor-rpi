@@ -4,7 +4,7 @@ A simple flask app that serves up an api to help monitor the storage and perform
 ## Use Case
 **Example of API being used as sensors in a [Home Assistant](https://www.home-assistant.io/) dashboard**
 
-![alt text](https://github.com/timpaulhope/rpi-monitor-pi/blob/main/img/haDash.png?raw=true)
+![alt text](/img/haDash.PNG)
 
 I call this api from an external home automation platform to create sensor entities for automations.
 
